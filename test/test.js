@@ -12,5 +12,3 @@ describe('GET /', function(){
 	 .expect(200, done); 
   });
 });
-
-assert(5 > 4);
