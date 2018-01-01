@@ -7,9 +7,9 @@
   "author": "None",
   "license": "None",
   "dependencies": {
-    "express": "3.2.4",
-    "jade": "1.11.0",
-    "mocha": "1.20.1",
-    "supertest": "1.1.0"
+    "express": "^4.16.2",
+    "mocha": "^4.1.0",
+    "pug": "^2.0.0-rc.4",
+    "supertest": "^3.0.0"
   }
 }
