@@ -5,19 +5,18 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/azure-appservice-static
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
       
       # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
 
     steps:
       - checkout
+      - setup_remote_docker
 
       # Download and cache dependencies
       - restore_cache:
@@ -26,16 +25,34 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: npm install
+      - run:
+        name: Install dependencies
+        command: npm install
 
       - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+        paths:
+          - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
         
-      # run tests!
-      - run: npm test
+      - run:
+        name: NPM Test
+        command: npm test
 
-# test:
-  # override:    
-    # - mocha
+      - add-ssh-keys:
+          fingerprints:
+            - "24:e5:a1:e5:44:e4:e2:71:01:83:a0:74:40:99:cc:63"
+  - deploy:
+      command: |
+        if [ "${CIRCLE_BRANCH}" == "master" ];
+          then ./scripts/publish.sh production;
+        fi
+
+        ./scripts/publish.sh
+        #!/bin/bash
+        git config --global user.email "$USER_EMAIL"
+        git config --global user.name "$USER_NAME"
+
+        git checkout -b "$1"
+        git merge master
+        git commit -am "$CIRCLE_BRANCH build#$CIRCLE_BUILD_NUM"
+        git push --force --set-upstream origin $1
