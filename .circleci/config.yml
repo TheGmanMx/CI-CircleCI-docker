@@ -37,10 +37,7 @@ jobs:
       - run:
         name: NPM Test
         command: npm test
-
-      - add-ssh-keys:
-          fingerprints:
-            - "24:e5:a1:e5:44:e4:e2:71:01:83:a0:74:40:99:cc:63"
+        
   - deploy:
       command: |
         if [ "${CIRCLE_BRANCH}" == "master" ];
