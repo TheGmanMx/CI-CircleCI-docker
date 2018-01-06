@@ -8,7 +8,7 @@ MAINTAINER nandito3555@hotmail.com
 # # Install Node...
 # RUN yum install -y npm
 
-RUN mkdir /app  
+RUN sudo mkdir /app  
 # Copy app to /app
 COPY . /app
 
