@@ -8,12 +8,13 @@ MAINTAINER nandito3555@hotmail.com
 # # Install Node...
 # RUN yum install -y npm
 
-# Copy app to /src
-COPY . /src
+RUN mkdir /app  
+# Copy app to /app
+COPY . /app
 
-# Install app and dependencies into /src
-RUN cd /src; npm install
+# Install app and dependencies into /app
+RUN cd /app; npm install
 
 EXPOSE 8080
 
-CMD cd /src && node ./app.js
+CMD cd /app && node ./app.js
