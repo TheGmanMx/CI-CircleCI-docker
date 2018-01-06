@@ -13,7 +13,7 @@ RUN sudo mkdir /app
 COPY . /app
 
 # Install app and dependencies into /app
-RUN cd /app; npm install
+RUN cd /app; sudo npm install
 
 EXPOSE 8080
 
